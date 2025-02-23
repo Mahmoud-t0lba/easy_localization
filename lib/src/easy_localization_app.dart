@@ -1,8 +1,11 @@
+// ignore_for_file: unnecessary_getters_setters
+
 import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/easy_localization_controller.dart';
 import 'package:easy_logger/easy_logger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -11,96 +14,28 @@ import 'localization.dart';
 
 part 'utils.dart';
 
-///  EasyLocalization
-///  example:
-///  ```
-///  void main(){
-///    runApp(EasyLocalization(
-///      child: MyApp(),
-///      supportedLocales: [Locale('en', 'US'), Locale('ar', 'DZ')],
-///      path: 'resources/langs/langs.csv',
-///      assetLoader: CsvAssetLoader()
-///    ));
-///  }
-///  ```
 class EasyLocalization extends StatefulWidget {
-  /// Place for your main page widget.
   final Widget child;
 
-  /// List of supported locales.
-  /// {@macro flutter.widgets.widgetsApp.supportedLocales}
   final List<Locale> supportedLocales;
 
-  /// Locale when the locale is not in the list
   final Locale? fallbackLocale;
 
-  /// Overrides device locale.
   final Locale? startLocale;
 
-  /// Trigger for using only language code for reading localization files.
-  /// @Default value false
-  /// Example:
-  /// ```
-  /// en.json //useOnlyLangCode: true
-  /// en-US.json //useOnlyLangCode: false
-  /// ```
   final bool useOnlyLangCode;
 
-  /// If a localization key is not found in the locale file, try to use the fallbackLocale file.
-  /// @Default value false
-  /// Example:
-  /// ```
-  /// useFallbackTranslations: true
-  /// ```
   final bool useFallbackTranslations;
 
-  /// If a localization key is empty in the locale file, try to use the fallbackLocale file.
-  /// Does not take effect if [useFallbackTranslations] is false.
-  /// @Default value false
-  /// Example:
-  /// ```
-  /// useFallbackTranslationsForEmptyResources: true
-  /// ```
   final bool useFallbackTranslationsForEmptyResources;
 
-  /// Ignore usage of plural strings for languages that do not use plural rules.
-  /// @Default value false
-  /// Example:
-  /// ```
-  /// // Default behavior, use "zero" rule for 0 even if the language doesn't
-  /// // use it by default (e.g. "en"). If "zero" localization for that string
-  /// // doesn't exist, "other" is still used as fallback.
-  /// // "nTimes": "{count, plural, =0{never} =1{once} other{{count} times}}"
-  /// // Text(AppLocalizations.of(context)!.nTimes(_counter)),
-  /// // will print "never, once, 2 times" for ALL languages.
-  /// ignorePluralRules: true
-  /// // Use "zero" rule for 0 only if the language is set to do so (e.g. for
-  /// "lt" but not for "en").
-  /// // "nTimes": "{count, plural, =0{never} =1{once} other{{count} times}}"
-  /// // Text(AppLocalizations.of(context)!.nTimes(_counter)),
-  /// // will print "never, once, 2 times" ONLY for languages with plural rules.
-  /// ignorePluralRules: false
-  /// ```
   final bool ignorePluralRules;
 
-  /// Path to your folder with localization files.
-  /// Example:
-  /// ```dart
-  /// path: 'assets/translations',
-  /// path: 'assets/translations/lang.csv',
-  /// ```
   final String path;
 
-  /// Class loader for localization files.
-  /// You can use custom loaders from [Easy Localization Loader](https://github.com/aissat/easy_localization_loader) or create your own class.
-  /// @Default value `const RootBundleAssetLoader()`
   // ignore: prefer_typing_uninitialized_variables
   final AssetLoader assetLoader;
 
-  /// Class loader for localization files that belong to other packages.
-  /// You can use custom loaders from [Easy Localization Loader](https://github.com/aissat/easy_localization_loader) or create your own class.
-  /// Example:
-  /// ```dart
   //   runApp(
   //   EasyLocalization(
   //     supportedLocales: const <Locale>[
@@ -116,15 +51,11 @@ class EasyLocalization extends StatefulWidget {
   //     child: const MainApp(),
   //   ),
   // );
-  /// @Default value `null`
+
   final List<AssetLoader>? extraAssetLoaders;
 
-  /// Save locale in device storage.
-  /// @Default value true
   final bool saveLocale;
 
-  /// Shows a custom error widget when an error is encountered instead of the default error widget.
-  /// @Default value `errorWidget = ErrorWidget()`
   final Widget Function(FlutterError? message)? errorWidget;
 
   EasyLocalization({
@@ -153,16 +84,10 @@ class EasyLocalization extends StatefulWidget {
   _EasyLocalizationState createState() => _EasyLocalizationState();
 
   // ignore: library_private_types_in_public_api
-  static _EasyLocalizationProvider? of(BuildContext context) =>
-      _EasyLocalizationProvider.of(context);
+  static _EasyLocalizationProvider? of(BuildContext context) => _EasyLocalizationProvider.of(context);
 
-  /// ensureInitialized needs to be called in main
-  /// so that savedLocale is loaded and used from the
-  /// start.
-  static Future<void> ensureInitialized() async =>
-      await EasyLocalizationController.initEasyLocation();
+  static Future<void> ensureInitialized() async => await EasyLocalizationController.initEasyLocation();
 
-  /// Customizable logger
   static EasyLogger logger = EasyLogger(name: '🌎 Easy Localization');
 }
 
@@ -217,8 +142,7 @@ class _EasyLocalizationState extends State<EasyLocalization> {
       delegate: _EasyLocalizationDelegate(
         localizationController: localizationController,
         supportedLocales: widget.supportedLocales,
-        useFallbackTranslationsForEmptyResources:
-            widget.useFallbackTranslationsForEmptyResources,
+        useFallbackTranslationsForEmptyResources: widget.useFallbackTranslationsForEmptyResources,
         ignorePluralRules: widget.ignorePluralRules,
       ),
     );
@@ -231,16 +155,6 @@ class _EasyLocalizationProvider extends InheritedWidget {
   final Locale? currentLocale;
   final _EasyLocalizationDelegate delegate;
 
-  /// {@macro flutter.widgets.widgetsApp.localizationsDelegates}
-  ///
-  /// ```dart
-  ///   delegates = [
-  ///     delegate
-  ///     GlobalMaterialLocalizations.delegate,
-  ///     GlobalWidgetsLocalizations.delegate,
-  ///     GlobalCupertinoLocalizations.delegate
-  ///   ],
-  /// ```
   List<LocalizationsDelegate> get delegates => [
         delegate,
         GlobalMaterialLocalizations.delegate,
@@ -248,27 +162,22 @@ class _EasyLocalizationProvider extends InheritedWidget {
         GlobalCupertinoLocalizations.delegate,
       ];
 
-  /// Get List of supported locales
   List<Locale> get supportedLocales => parent.supportedLocales;
 
   // _EasyLocalizationDelegate get delegate => parent.delegate;
 
-  _EasyLocalizationProvider(this.parent, this._localeState,
-      {Key? key, required this.delegate})
+  _EasyLocalizationProvider(this.parent, this._localeState, {Key? key, required this.delegate})
       : currentLocale = _localeState.locale,
         super(key: key, child: parent.child) {
     EasyLocalization.logger.debug('Init provider');
   }
 
-  /// Get current locale
   Locale get locale => _localeState.locale;
 
-  /// Get fallback locale
   Locale? get fallbackLocale => parent.fallbackLocale;
 
   // Locale get startLocale => parent.startLocale;
 
-  /// Change app locale
   Future<void> setLocale(Locale locale) async {
     // Check old locale
     if (locale != _localeState.locale) {
@@ -277,16 +186,13 @@ class _EasyLocalizationProvider extends InheritedWidget {
     }
   }
 
-  /// Clears a saved locale from device storage
   Future<void> deleteSaveLocale() async {
     await _localeState.deleteSaveLocale();
   }
 
-  /// Getting device locale from platform
   Locale get deviceLocale => _localeState.deviceLocale;
   Locale? get savedLocale => _localeState.savedLocale;
 
-  /// Reset locale to platform locale
   Future<void> resetLocale() => _localeState.resetLocale();
 
   @override
@@ -304,7 +210,6 @@ class _EasyLocalizationDelegate extends LocalizationsDelegate<Localization> {
   final bool useFallbackTranslationsForEmptyResources;
   final bool ignorePluralRules;
 
-  ///  * use only the lang code to generate i18n file path like en.json or ar.json
   // final bool useOnlyLangCode;
 
   _EasyLocalizationDelegate({
@@ -330,8 +235,7 @@ class _EasyLocalizationDelegate extends LocalizationsDelegate<Localization> {
       value,
       translations: localizationController!.translations,
       fallbackTranslations: localizationController!.fallbackTranslations,
-      useFallbackTranslationsForEmptyResources:
-          useFallbackTranslationsForEmptyResources,
+      useFallbackTranslationsForEmptyResources: useFallbackTranslationsForEmptyResources,
       ignorePluralRules: ignorePluralRules,
     );
     return Future.value(Localization.instance);
@@ -339,4 +243,75 @@ class _EasyLocalizationDelegate extends LocalizationsDelegate<Localization> {
 
   @override
   bool shouldReload(LocalizationsDelegate<Localization> old) => false;
+}
+
+class EasyLogger {
+  EasyLogger({
+    this.name = '',
+    this.enableBuildModes = const <BuildMode>[BuildMode.profile, BuildMode.debug],
+    this.enableLevels = const <LevelMessages>[
+      LevelMessages.debug,
+      LevelMessages.info,
+      LevelMessages.error,
+      LevelMessages.warning,
+    ],
+    EasyLogPrinter? printer,
+    this.defaultLevel = LevelMessages.info,
+  }) {
+    _printer = printer ?? easyLogDefaultPrinter;
+    _currentBuildMode = _getCurrentBuildMode();
+  }
+
+  BuildMode? _currentBuildMode;
+
+  String name;
+
+  List<BuildMode> enableBuildModes;
+
+  List<LevelMessages> enableLevels;
+
+  LevelMessages defaultLevel;
+
+  EasyLogPrinter? _printer;
+
+  EasyLogPrinter? get printer => _printer;
+
+  set printer(EasyLogPrinter? newPrinter) => _printer = newPrinter;
+
+  BuildMode _getCurrentBuildMode() {
+    if (kReleaseMode) {
+      return BuildMode.release;
+    } else if (kProfileMode) {
+      return BuildMode.profile;
+    }
+    return BuildMode.debug;
+  }
+
+  bool isEnabled(LevelMessages level) {
+    if (!enableBuildModes.contains(_currentBuildMode)) {
+      return false;
+    }
+    if (!enableLevels.contains(level)) {
+      return false;
+    }
+    return true;
+  }
+
+  void call(Object object, {StackTrace? stackTrace, LevelMessages? level}) {
+    level ??= defaultLevel;
+    if (isEnabled(level)) {
+      _printer!('');
+    }
+  }
+
+  void debug(Object object, {StackTrace? stackTrace}) =>
+      call(object, stackTrace: stackTrace, level: LevelMessages.debug);
+
+  void info(Object object, {StackTrace? stackTrace}) => call(object, stackTrace: stackTrace, level: LevelMessages.info);
+
+  void warning(Object object, {StackTrace? stackTrace}) =>
+      call(object, stackTrace: stackTrace, level: LevelMessages.warning);
+
+  void error(Object object, {StackTrace? stackTrace}) =>
+      call(object, stackTrace: stackTrace, level: LevelMessages.error);
 }
