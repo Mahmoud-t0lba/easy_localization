@@ -1,19 +1,20 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class LanguageView extends StatelessWidget {
+  const LanguageView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           '',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         elevation: 0,
       ),
       body: Container(
@@ -22,11 +23,11 @@ class LanguageView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.only(top: 26),
-              margin: EdgeInsets.symmetric(
+              padding: const EdgeInsets.only(top: 26),
+              margin: const EdgeInsets.symmetric(
                 horizontal: 24,
               ),
-              child: Text(
+              child: const Text(
                 'Choose language',
                 style: TextStyle(
                   color: Colors.blue,
@@ -42,22 +43,22 @@ class LanguageView extends StatelessWidget {
                 locale:
                     context.supportedLocales[1] //BuildContext extension method
                 ),
-            _Divider(),
+            const _Divider(),
             _SwitchListTileMenuItem(
                 title: 'English',
                 subtitle: 'English',
                 locale: context.supportedLocales[0]),
-            _Divider(),
+            const _Divider(),
             _SwitchListTileMenuItem(
                 title: 'German',
                 subtitle: 'German',
                 locale: context.supportedLocales[2]),
-            _Divider(),
+            const _Divider(),
             _SwitchListTileMenuItem(
                 title: 'Русский',
                 subtitle: 'Русский',
                 locale: context.supportedLocales[3]),
-            _Divider(),
+            const _Divider(),
           ],
         ),
       ),
@@ -71,10 +72,10 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         horizontal: 24,
       ),
-      child: Divider(
+      child: const Divider(
         color: Colors.grey,
       ),
     );
@@ -98,7 +99,7 @@ class _SwitchListTileMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10, right: 10, top: 5),
+      margin: const EdgeInsets.only(left: 10, right: 10, top: 5),
       decoration: BoxDecoration(
         border:
             isSelected(context) ? Border.all(color: Colors.blueAccent) : null,

@@ -1,10 +1,12 @@
+import 'public.dart' as ez;
+import 'package:intl/intl.dart';
+import 'easy_localization_app.dart';
+import 'package:flutter/widgets.dart';
 import 'package:easy_localization/src/exceptions.dart';
 import 'package:easy_localization/src/localization.dart';
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
+// ignore_for_file: deprecated_member_use
 
-import 'easy_localization_app.dart';
-import 'public.dart' as ez;
+
 
 /// Text widget extension method for access to [tr()] and [plural()]
 /// Example :

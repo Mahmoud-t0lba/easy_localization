@@ -1,2 +1,8 @@
 #https://dart.dev/guides/language/analysis-options
 include: package:flutter_lints/flutter.yaml
+analyzer:
+  errors:
+    constant_identifier_names: ignore
+    unnecessary_getters_setters: ignore
+    unused_element: ignore
+    use_build_context_synchronously: ignore

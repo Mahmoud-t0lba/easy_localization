@@ -1,8 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/widgets.dart';
-
 import 'plural_rules.dart';
 import 'translations.dart';
+import 'package:flutter/widgets.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class Localization {
   Translations? _translations, _fallbackTranslations;
@@ -69,7 +69,6 @@ class Localization {
   }
 
   String _replaceLinks(String res, {bool logging = true}) {
-    // TODO: add recursion detection and a resolve stack.
     final matches = _linkKeyMatcher.allMatches(res);
     var result = res;
 
@@ -150,7 +149,8 @@ class Localization {
     late String res;
 
     final pluralRule = _pluralRule(_locale.languageCode, value);
-    final pluralCase = pluralRule != null ? pluralRule() : _pluralCaseFallback(value);
+    final pluralCase =
+        pluralRule != null ? pluralRule() : _pluralCaseFallback(value);
 
     switch (pluralCase) {
       case PluralCase.ZERO:
@@ -193,7 +193,8 @@ class Localization {
     if (subKey == 'other') return _resolve('$key.other');
 
     final tag = '$key.$subKey';
-    var resource = _resolve(tag, logging: false, fallback: _fallbackTranslations != null);
+    var resource =
+        _resolve(tag, logging: false, fallback: _fallbackTranslations != null);
     if (resource == tag) {
       resource = _resolve('$key.other');
     }
