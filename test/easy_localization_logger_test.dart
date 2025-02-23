@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_logger/easy_logger.dart';
+import 'package:easy_localization/src/logger.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'easy_localization_utils_test.dart';
@@ -52,8 +52,7 @@ void main() async {
       StackTrace testStackTrace;
       testStackTrace = StackTrace.fromString('test stack');
 
-      EasyLocalization.logger('print error',
-          level: LevelMessages.error, stackTrace: testStackTrace);
+      EasyLocalization.logger('print error', level: LevelMessages.error, stackTrace: testStackTrace);
       expect(printLog.first, contains('print error'));
       expect(printLog.first, contains('[ERROR]'));
       expect(printLog.last, contains('test stack'));

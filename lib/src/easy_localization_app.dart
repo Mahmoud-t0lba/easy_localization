@@ -4,13 +4,12 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/easy_localization_controller.dart';
-import 'package:easy_logger/easy_logger.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'asset_loader.dart';
 import 'localization.dart';
+import 'logger.dart';
 
 part 'utils.dart';
 
@@ -35,22 +34,6 @@ class EasyLocalization extends StatefulWidget {
 
   // ignore: prefer_typing_uninitialized_variables
   final AssetLoader assetLoader;
-
-  //   runApp(
-  //   EasyLocalization(
-  //     supportedLocales: const <Locale>[
-  //       Locale('en'),
-  //     ],
-  //     fallbackLocale: const Locale('en'),
-  //     assetLoader: const RootBundleAssetLoader(),
-  //     extraAssetLoaders: [
-  //         TranslationsLoader(packageName: 'package_example_1'),
-  //         TranslationsLoader(packageName: 'package_example_2'),
-  //     ],
-  //     path: 'lib/l10n/translations',
-  //     child: const MainApp(),
-  //   ),
-  // );
 
   final List<AssetLoader>? extraAssetLoaders;
 
@@ -243,75 +226,4 @@ class _EasyLocalizationDelegate extends LocalizationsDelegate<Localization> {
 
   @override
   bool shouldReload(LocalizationsDelegate<Localization> old) => false;
-}
-
-class EasyLogger {
-  EasyLogger({
-    this.name = '',
-    this.enableBuildModes = const <BuildMode>[BuildMode.profile, BuildMode.debug],
-    this.enableLevels = const <LevelMessages>[
-      LevelMessages.debug,
-      LevelMessages.info,
-      LevelMessages.error,
-      LevelMessages.warning,
-    ],
-    EasyLogPrinter? printer,
-    this.defaultLevel = LevelMessages.info,
-  }) {
-    _printer = printer ?? easyLogDefaultPrinter;
-    _currentBuildMode = _getCurrentBuildMode();
-  }
-
-  BuildMode? _currentBuildMode;
-
-  String name;
-
-  List<BuildMode> enableBuildModes;
-
-  List<LevelMessages> enableLevels;
-
-  LevelMessages defaultLevel;
-
-  EasyLogPrinter? _printer;
-
-  EasyLogPrinter? get printer => _printer;
-
-  set printer(EasyLogPrinter? newPrinter) => _printer = newPrinter;
-
-  BuildMode _getCurrentBuildMode() {
-    if (kReleaseMode) {
-      return BuildMode.release;
-    } else if (kProfileMode) {
-      return BuildMode.profile;
-    }
-    return BuildMode.debug;
-  }
-
-  bool isEnabled(LevelMessages level) {
-    if (!enableBuildModes.contains(_currentBuildMode)) {
-      return false;
-    }
-    if (!enableLevels.contains(level)) {
-      return false;
-    }
-    return true;
-  }
-
-  void call(Object object, {StackTrace? stackTrace, LevelMessages? level}) {
-    level ??= defaultLevel;
-    if (isEnabled(level)) {
-      _printer!('');
-    }
-  }
-
-  void debug(Object object, {StackTrace? stackTrace}) =>
-      call(object, stackTrace: stackTrace, level: LevelMessages.debug);
-
-  void info(Object object, {StackTrace? stackTrace}) => call(object, stackTrace: stackTrace, level: LevelMessages.info);
-
-  void warning(Object object, {StackTrace? stackTrace}) =>
-      call(object, stackTrace: stackTrace, level: LevelMessages.warning);
-
-  void error(Object object, {StackTrace? stackTrace}) =>
-      call(object, stackTrace: stackTrace, level: LevelMessages.error);
 }

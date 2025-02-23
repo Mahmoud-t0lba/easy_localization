@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:easy_logger/easy_logger.dart';
+import 'package:easy_localization/src/logger.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 List<String> printLog = <String>[];
@@ -61,8 +61,7 @@ void main() {
       StackTrace testStackTrace;
       testStackTrace = StackTrace.fromString('test stack');
 
-      logger('print error',
-          level: LevelMessages.error, stackTrace: testStackTrace);
+      logger('print error', level: LevelMessages.error, stackTrace: testStackTrace);
       expect(printLog.first, contains('print error'));
       expect(printLog.first, contains('[ERROR]'));
       expect(printLog.last, contains('test stack'));

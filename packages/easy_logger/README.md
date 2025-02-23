@@ -18,7 +18,8 @@ dependencies:
 Create global logger value
 
 ```dart
-import 'package:easy_logger/easy_logger.dart';
+import 'package:easy_localization/src/logger.dart';
+
 
 final EasyLogger logger = EasyLogger(
   name: 'NamePrefix',

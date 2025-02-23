@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_logger/easy_logger.dart';
+import 'package:easy_localization/src/logger.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -87,9 +86,7 @@ void main() async {
             saveLocale: false,
             useOnlyLangCode: true,
             // fallbackLocale:Locale('en') ,
-            supportedLocales: const [
-              Locale('ar')
-            ], // Locale('en', 'US'), Locale('ar','DZ')
+            supportedLocales: const [Locale('ar')], // Locale('en', 'US'), Locale('ar','DZ')
             child: const MyApp(),
           ));
           // await tester.idle();
@@ -117,10 +114,7 @@ void main() async {
             await tester.pumpWidget(EasyLocalization(
               path: '../../i18n',
               // fallbackLocale:Locale('en') ,
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('ar', 'DZ')
-              ], // Locale('en', 'US'), Locale('ar','DZ')
+              supportedLocales: const [Locale('en', 'US'), Locale('ar', 'DZ')], // Locale('en', 'US'), Locale('ar','DZ')
               child: const MyApp(),
             ));
             // await tester.idle();
@@ -140,10 +134,7 @@ void main() async {
             await tester.pumpWidget(EasyLocalization(
               path: '../../i18n',
               // fallbackLocale:Locale('en') ,
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('ar', 'DZ')
-              ], // Locale('en', 'US'), Locale('ar','DZ')
+              supportedLocales: const [Locale('en', 'US'), Locale('ar', 'DZ')], // Locale('en', 'US'), Locale('ar','DZ')
               child: const MyApp(),
             ));
             // await tester.idle();
@@ -161,10 +152,7 @@ void main() async {
           await tester.runAsync(() async {
             await tester.pumpWidget(EasyLocalization(
               path: '../../i18n',
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('ar', 'DZ')
-              ], // Locale('en', 'US'), Locale('ar','DZ')
+              supportedLocales: const [Locale('en', 'US'), Locale('ar', 'DZ')], // Locale('en', 'US'), Locale('ar','DZ')
               child: const MyApp(),
             ));
             // await tester.idle();
@@ -182,10 +170,7 @@ void main() async {
           await tester.runAsync(() async {
             await tester.pumpWidget(EasyLocalization(
               path: '../../i18n',
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('ar', 'DZ')
-              ], // Locale('en', 'US'), Locale('ar','DZ')
+              supportedLocales: const [Locale('en', 'US'), Locale('ar', 'DZ')], // Locale('en', 'US'), Locale('ar','DZ')
               startLocale: const Locale('ar', 'DZ'),
               child: const MyApp(),
             ));
@@ -208,10 +193,7 @@ void main() async {
           await tester.runAsync(() async {
             await tester.pumpWidget(EasyLocalization(
               path: '../../i18n',
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('ar', 'DZ')
-              ], // Locale('en', 'US'), Locale('ar','DZ')
+              supportedLocales: const [Locale('en', 'US'), Locale('ar', 'DZ')], // Locale('en', 'US'), Locale('ar','DZ')
               child: const MyApp(),
             ));
             await tester.idle();
@@ -229,10 +211,7 @@ void main() async {
           await tester.runAsync(() async {
             await tester.pumpWidget(EasyLocalization(
               path: '../../i18n',
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('ar', 'DZ')
-              ], // Locale('en', 'US'), Locale('ar','DZ')
+              supportedLocales: const [Locale('en', 'US'), Locale('ar', 'DZ')], // Locale('en', 'US'), Locale('ar','DZ')
               startLocale: const Locale('ar', 'DZ'),
               child: const MyApp(),
             ));
